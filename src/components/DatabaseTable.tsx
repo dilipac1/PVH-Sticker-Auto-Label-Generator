@@ -239,23 +239,11 @@ export const DatabaseTable: React.FC<DatabaseTableProps> = ({
                       />
                     </td>
 
-                    {/* EDITABLE CARTON NUMBER */}
-                    <td className="p-3 text-slate-700 font-bold">
-                      <div className="flex items-center gap-1">
-                        <span className="text-slate-400 font-bold">#</span>
-                        <input
-                          type="number"
-                          min="1"
-                          value={r.cartonNo || ''}
-                          placeholder="1"
-                          onFocus={(e) => e.target.select()}
-                          onChange={(e) =>
-                            handleCellChange(r, 'cartonNo', parseInt(e.target.value) || '')
-                          }
-                          className="w-14 px-1.5 py-0.5 text-center font-mono font-bold text-slate-800 bg-slate-100 border border-slate-200 hover:border-slate-300 focus:border-blue-500 focus:bg-white rounded focus:outline-none"
-                          title="Click to change Carton Number"
-                        />
-                      </div>
+                    {/* CARTON NUMBER */}
+                    <td className="p-3 text-slate-600">
+                      <span className="bg-slate-100 px-2.5 py-1 rounded-lg text-xs font-bold font-mono text-slate-700 border border-slate-200">
+                        #{r.cartonNo || 1}
+                      </span>
                     </td>
 
                     {/* GROSS WEIGHT */}
