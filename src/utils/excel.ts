@@ -92,10 +92,10 @@ export const DEFAULT_PRINTER_SETTINGS: PrinterSettings = {
   layoutMode: '2-up',
   paperSize: 'zebra-12x4', // Exact Zebra ZT410 (4.00 in x 12.00 in Landscape)
   defaultTareWeight: 0.50,
-  fontSizePt: 12,
+  fontSizePt: 16, // Fills 12" x 4" page fully matching user Image 2
   fontFamily: 'Arial',
   uppercaseOnly: true,
-  labelWidthPx: 210,
+  labelWidthPx: 240, // Wide label column for large bold text
   columnWidthMm: 80,
   rowGapMm: 4,
   stickerWidthMm: 95,
