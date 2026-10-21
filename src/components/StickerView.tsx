@@ -18,103 +18,70 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
   const fontStyle = {
     fontFamily: settings?.fontFamily || 'Arial, sans-serif',
     fontSize: isCompact ? '13px' : `${settings?.fontSizePt || 17}pt`,
-    lineHeight: '2.05', // Clean vertical line height
+    lineHeight: '2.05',
   };
-
-  const labelWidth = settings?.labelWidthPx || 275;
 
   return (
     <div
       style={fontStyle}
       className={`font-bold tracking-wide text-black text-left select-none bg-white p-2 border border-dashed border-gray-300 print:border-none print:p-0 print:m-0 print:shadow-none ${className}`}
     >
-      <table className="w-full border-collapse text-left border-none table-fixed">
-        <tbody>
-          {/* GROSS WEIGHT */}
-          <tr className="align-baseline">
-            <td
-              style={{ width: `${labelWidth}px`, minWidth: `${labelWidth}px` }}
-              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-3 py-1"
-            >
-              GROSS WEIGHT
-            </td>
-            <td className="w-6 text-center font-extrabold px-1 py-1">:</td>
-            <td className="font-extrabold text-black pl-3 whitespace-nowrap py-1">
-              {formatWeight(record.grossWeight)}
-            </td>
-          </tr>
+      {/* CSS Grid with max-content ensures Column 1 NEVER overlaps with Colon or Values */}
+      <div className="grid grid-cols-[max-content_24px_1fr] items-baseline gap-y-0.5 w-full font-extrabold text-black">
+        {/* GROSS WEIGHT */}
+        <div className="whitespace-nowrap pr-3 font-extrabold text-black">
+          GROSS WEIGHT
+        </div>
+        <div className="text-center font-extrabold text-black">:</div>
+        <div className="whitespace-nowrap pl-3 font-extrabold text-black">
+          {formatWeight(record.grossWeight)}
+        </div>
 
-          {/* NET WEIGHT */}
-          <tr className="align-baseline">
-            <td
-              style={{ width: `${labelWidth}px`, minWidth: `${labelWidth}px` }}
-              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-3 py-1"
-            >
-              NET WEIGHT
-            </td>
-            <td className="w-6 text-center font-extrabold px-1 py-1">:</td>
-            <td className="font-extrabold text-black pl-3 whitespace-nowrap py-1">
-              {formatWeight(record.netWeight)}
-            </td>
-          </tr>
+        {/* NET WEIGHT */}
+        <div className="whitespace-nowrap pr-3 font-extrabold text-black">
+          NET WEIGHT
+        </div>
+        <div className="text-center font-extrabold text-black">:</div>
+        <div className="whitespace-nowrap pl-3 font-extrabold text-black">
+          {formatWeight(record.netWeight)}
+        </div>
 
-          {/* MEASUREMENT */}
-          <tr className="align-baseline">
-            <td
-              style={{ width: `${labelWidth}px`, minWidth: `${labelWidth}px` }}
-              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-3 py-1"
-            >
-              MEASUREMENT
-            </td>
-            <td className="w-6 text-center font-extrabold px-1 py-1">:</td>
-            <td className="font-extrabold text-black pl-3 whitespace-nowrap py-1">
-              {record.measurementStr || '59.69X38.1X29.21XCM'}
-            </td>
-          </tr>
+        {/* MEASUREMENT */}
+        <div className="whitespace-nowrap pr-3 font-extrabold text-black">
+          MEASUREMENT
+        </div>
+        <div className="text-center font-extrabold text-black">:</div>
+        <div className="whitespace-nowrap pl-3 font-extrabold text-black">
+          {record.measurementStr || '59.69X38.1X29.21XCM'}
+        </div>
 
-          {/* SEASON/YEAR */}
-          <tr className="align-baseline">
-            <td
-              style={{ width: `${labelWidth}px`, minWidth: `${labelWidth}px` }}
-              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-3 py-1"
-            >
-              SEASON/YEAR
-            </td>
-            <td className="w-6 text-center font-extrabold px-1 py-1">:</td>
-            <td className="font-extrabold text-black pl-3 whitespace-nowrap py-1">
-              {record.seasonYear || 'SP27'}
-            </td>
-          </tr>
+        {/* SEASON/YEAR */}
+        <div className="whitespace-nowrap pr-3 font-extrabold text-black">
+          SEASON/YEAR
+        </div>
+        <div className="text-center font-extrabold text-black">:</div>
+        <div className="whitespace-nowrap pl-3 font-extrabold text-black">
+          {record.seasonYear || 'SP27'}
+        </div>
 
-          {/* COUNTRY OF ORIGIN */}
-          <tr className="align-baseline">
-            <td
-              style={{ width: `${labelWidth}px`, minWidth: `${labelWidth}px` }}
-              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-3 py-1"
-            >
-              COUNTRY OF ORIGIN
-            </td>
-            <td className="w-6 text-center font-extrabold px-1 py-1">:</td>
-            <td className="font-extrabold text-black pl-3 whitespace-nowrap py-1">
-              {record.countryOfOrigin || 'SRI LANKA'}
-            </td>
-          </tr>
+        {/* COUNTRY OF ORIGIN */}
+        <div className="whitespace-nowrap pr-3 font-extrabold text-black">
+          COUNTRY OF ORIGIN
+        </div>
+        <div className="text-center font-extrabold text-black">:</div>
+        <div className="whitespace-nowrap pl-3 font-extrabold text-black">
+          {record.countryOfOrigin || 'SRI LANKA'}
+        </div>
 
-          {/* PO NUMBER */}
-          <tr className="align-baseline">
-            <td
-              style={{ width: `${labelWidth}px`, minWidth: `${labelWidth}px` }}
-              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-3 py-1"
-            >
-              PO NUMBER
-            </td>
-            <td className="w-6 text-center font-extrabold px-1 py-1">:</td>
-            <td className="font-extrabold text-black pl-3 whitespace-nowrap py-1">
-              {record.poNumber || '4100059739'}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        {/* PO NUMBER */}
+        <div className="whitespace-nowrap pr-3 font-extrabold text-black">
+          PO NUMBER
+        </div>
+        <div className="text-center font-extrabold text-black">:</div>
+        <div className="whitespace-nowrap pl-3 font-extrabold text-black">
+          {record.poNumber || '4100059739'}
+        </div>
+      </div>
     </div>
   );
 };

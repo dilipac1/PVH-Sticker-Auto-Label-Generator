@@ -13,7 +13,7 @@ import { TwoUpStickerPair } from './components/StickerView';
 import { Sparkles, Layers } from 'lucide-react';
 
 export default function App() {
-  // LocalStorage state management
+  // LocalStorage state management with migration safety
   const [records, setRecords] = useState<StickerRecord[]>(() => {
     try {
       const saved = localStorage.getItem('pvh_sticker_records');
@@ -26,7 +26,15 @@ export default function App() {
   const [printerSettings, setPrinterSettings] = useState<PrinterSettings>(() => {
     try {
       const saved = localStorage.getItem('pvh_printer_settings');
-      return saved ? JSON.parse(saved) : DEFAULT_PRINTER_SETTINGS;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return {
+          ...DEFAULT_PRINTER_SETTINGS,
+          ...parsed,
+          fontSizePt: parsed.fontSizePt || 17, // Ensure 17pt default
+        };
+      }
+      return DEFAULT_PRINTER_SETTINGS;
     } catch {
       return DEFAULT_PRINTER_SETTINGS;
     }
@@ -93,6 +101,8 @@ export default function App() {
     if (confirm('Reset database records to initial Excel demo data?')) {
       setRecords(INITIAL_DEMO_RECORDS);
       setSelectedIds([]);
+      setPrinterSettings(DEFAULT_PRINTER_SETTINGS);
+      localStorage.removeItem('pvh_printer_settings');
     }
   };
 
