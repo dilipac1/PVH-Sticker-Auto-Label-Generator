@@ -7,12 +7,10 @@ import {
   Copy,
   Plus,
   Search,
-  ArrowUpDown,
   Filter,
   CheckSquare,
   Square,
   Sparkles,
-  Check,
 } from 'lucide-react';
 
 interface DatabaseTableProps {
@@ -40,7 +38,6 @@ export const DatabaseTable: React.FC<DatabaseTableProps> = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterSeason, setFilterSeason] = useState('ALL');
-  const [editingId, setEditingId] = useState<string | null>(null);
 
   // Get unique seasons for filtering dropdown
   const uniqueSeasons = Array.from(new Set(records.map((r) => r.seasonYear))).filter(Boolean);
@@ -156,7 +153,7 @@ export const DatabaseTable: React.FC<DatabaseTableProps> = ({
                 className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg text-xs font-semibold transition flex items-center gap-1.5"
               >
                 <Trash2 className="w-3.5 h-3.5" />
-                Delete ({selectedIds.length})
+                Delete Selected ({selectedIds.length})
               </button>
             </>
           )}
@@ -189,7 +186,7 @@ export const DatabaseTable: React.FC<DatabaseTableProps> = ({
                 </button>
               </th>
               <th className="p-3 font-bold">PO NUMBER</th>
-              <th className="p-3 font-bold">CARTON</th>
+              <th className="p-3 font-bold">CARTON #</th>
               <th className="p-3 font-bold text-right">GROSS (KG)</th>
               <th className="p-3 font-bold text-right">NET (KG)</th>
               <th className="p-3 font-bold text-center">INCH (L x W x H)</th>
@@ -203,7 +200,7 @@ export const DatabaseTable: React.FC<DatabaseTableProps> = ({
             {filteredRecords.length === 0 ? (
               <tr>
                 <td colSpan={10} className="p-8 text-center text-slate-400 font-medium">
-                  No sticker records found. Click "New Sticker Entry" or "Import Excel" to add records.
+                  No sticker records in database. Click "New Sticker Entry" to add records.
                 </td>
               </tr>
             ) : (
@@ -236,16 +233,29 @@ export const DatabaseTable: React.FC<DatabaseTableProps> = ({
                       <input
                         type="text"
                         value={r.poNumber}
+                        onFocus={(e) => e.target.select()}
                         onChange={(e) => handleCellChange(r, 'poNumber', e.target.value)}
                         className="w-28 px-1.5 py-0.5 border border-transparent hover:border-slate-300 focus:border-blue-500 rounded font-mono font-bold bg-transparent"
                       />
                     </td>
 
-                    {/* CARTON NO */}
-                    <td className="p-3 text-slate-600">
-                      <span className="bg-slate-100 px-2 py-0.5 rounded text-[11px] font-bold">
-                        #{r.cartonNo || 1}
-                      </span>
+                    {/* EDITABLE CARTON NUMBER */}
+                    <td className="p-3 text-slate-700 font-bold">
+                      <div className="flex items-center gap-1">
+                        <span className="text-slate-400 font-bold">#</span>
+                        <input
+                          type="number"
+                          min="1"
+                          value={r.cartonNo || ''}
+                          placeholder="1"
+                          onFocus={(e) => e.target.select()}
+                          onChange={(e) =>
+                            handleCellChange(r, 'cartonNo', parseInt(e.target.value) || '')
+                          }
+                          className="w-14 px-1.5 py-0.5 text-center font-mono font-bold text-slate-800 bg-slate-100 border border-slate-200 hover:border-slate-300 focus:border-blue-500 focus:bg-white rounded focus:outline-none"
+                          title="Click to change Carton Number"
+                        />
+                      </div>
                     </td>
 
                     {/* GROSS WEIGHT */}
@@ -254,6 +264,7 @@ export const DatabaseTable: React.FC<DatabaseTableProps> = ({
                         type="number"
                         step="0.01"
                         value={r.grossWeight}
+                        onFocus={(e) => e.target.select()}
                         onChange={(e) => handleCellChange(r, 'grossWeight', e.target.value)}
                         className="w-20 px-1.5 py-0.5 text-right font-bold text-emerald-700 bg-emerald-50/50 border border-emerald-200 rounded focus:outline-none focus:ring-1 focus:ring-emerald-500"
                       />
@@ -271,6 +282,7 @@ export const DatabaseTable: React.FC<DatabaseTableProps> = ({
                           type="number"
                           step="0.1"
                           value={r.lengthInch}
+                          onFocus={(e) => e.target.select()}
                           onChange={(e) => handleCellChange(r, 'lengthInch', e.target.value)}
                           className="w-12 text-center p-0.5 border border-slate-200 rounded hover:border-blue-400 focus:border-blue-500"
                           title="Length (inch)"
@@ -280,6 +292,7 @@ export const DatabaseTable: React.FC<DatabaseTableProps> = ({
                           type="number"
                           step="0.1"
                           value={r.widthInch}
+                          onFocus={(e) => e.target.select()}
                           onChange={(e) => handleCellChange(r, 'widthInch', e.target.value)}
                           className="w-12 text-center p-0.5 border border-slate-200 rounded hover:border-blue-400 focus:border-blue-500"
                           title="Width (inch)"
@@ -289,6 +302,7 @@ export const DatabaseTable: React.FC<DatabaseTableProps> = ({
                           type="number"
                           step="0.1"
                           value={r.heightInch}
+                          onFocus={(e) => e.target.select()}
                           onChange={(e) => handleCellChange(r, 'heightInch', e.target.value)}
                           className="w-12 text-center p-0.5 border border-slate-200 rounded hover:border-blue-400 focus:border-blue-500"
                           title="Height (inch)"
@@ -310,6 +324,7 @@ export const DatabaseTable: React.FC<DatabaseTableProps> = ({
                       <input
                         type="text"
                         value={r.seasonYear}
+                        onFocus={(e) => e.target.select()}
                         onChange={(e) => handleCellChange(r, 'seasonYear', e.target.value)}
                         className="w-16 px-1 py-0.5 uppercase border border-transparent hover:border-slate-300 focus:border-blue-500 rounded bg-transparent"
                       />
@@ -320,6 +335,7 @@ export const DatabaseTable: React.FC<DatabaseTableProps> = ({
                       <input
                         type="text"
                         value={r.countryOfOrigin}
+                        onFocus={(e) => e.target.select()}
                         onChange={(e) => handleCellChange(r, 'countryOfOrigin', e.target.value)}
                         className="w-24 px-1 py-0.5 uppercase border border-transparent hover:border-slate-300 focus:border-blue-500 rounded bg-transparent"
                       />
@@ -363,14 +379,14 @@ export const DatabaseTable: React.FC<DatabaseTableProps> = ({
       <div className="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
         <div>
           Showing <span className="font-bold text-slate-800">{filteredRecords.length}</span> of{' '}
-          <span className="font-bold text-slate-800">{records.length}</span> records
+          <span className="font-bold text-slate-800">{records.length}</span> records (Private to your browser session)
         </div>
         <div className="flex items-center gap-4">
           <span className="text-amber-700 font-mono text-[11px]">
             Formula: INCH × 2.54 = CM
           </span>
           <span className="text-blue-700 font-mono text-[11px]">
-            Net Weight = Gross Weight - 0.50 KG
+            Net Weight = Gross Weight - 0.45 KG
           </span>
         </div>
       </div>

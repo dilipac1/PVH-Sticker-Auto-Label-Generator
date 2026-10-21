@@ -9,11 +9,9 @@ import { DatabaseTable } from './components/DatabaseTable';
 import { QuickAddModal } from './components/QuickAddModal';
 import { PrintSheetModal } from './components/PrintSheetModal';
 import { PrinterSettingsModal } from './components/PrinterSettingsModal';
-import { TwoUpStickerPair } from './components/StickerView';
-import { Sparkles, Layers } from 'lucide-react';
 
 export default function App() {
-  // LocalStorage state management with migration safety
+  // LocalStorage state management - Private to each user's browser session
   const [records, setRecords] = useState<StickerRecord[]>(() => {
     try {
       const saved = localStorage.getItem('pvh_sticker_records');
@@ -31,7 +29,7 @@ export default function App() {
         return {
           ...DEFAULT_PRINTER_SETTINGS,
           ...parsed,
-          fontSizePt: parsed.fontSizePt || 17, // Ensure 17pt default
+          fontSizePt: parsed.fontSizePt || 17,
         };
       }
       return DEFAULT_PRINTER_SETTINGS;
@@ -48,7 +46,7 @@ export default function App() {
   // Print queue subset
   const [printQueue, setPrintQueue] = useState<StickerRecord[]>(records);
 
-  // Sync to LocalStorage
+  // Sync to private browser LocalStorage
   useEffect(() => {
     localStorage.setItem('pvh_sticker_records', JSON.stringify(records));
   }, [records]);
@@ -97,15 +95,6 @@ export default function App() {
     setRecords((prev) => [dup, ...prev]);
   };
 
-  const handleResetDemo = () => {
-    if (confirm('Reset database records to initial Excel demo data?')) {
-      setRecords(INITIAL_DEMO_RECORDS);
-      setSelectedIds([]);
-      setPrinterSettings(DEFAULT_PRINTER_SETTINGS);
-      localStorage.removeItem('pvh_printer_settings');
-    }
-  };
-
   // Open print modal with custom record set
   const triggerPrintForRecords = (targetRecords: StickerRecord[]) => {
     setPrintQueue(targetRecords);
@@ -121,7 +110,7 @@ export default function App() {
     seasonYear: records[0]?.seasonYear || 'SP27',
     countryOfOrigin: records[0]?.countryOfOrigin || 'SRI LANKA',
     poNumber: records[0]?.poNumber || '4100059739',
-    tareWeight: printerSettings.defaultTareWeight || 0.5,
+    tareWeight: printerSettings.defaultTareWeight || 0.45,
     defaultLengthInch: records[0]?.lengthInch || 23.5,
     defaultWidthInch: records[0]?.widthInch || 15.0,
     defaultHeightInch: records[0]?.heightInch || 11.5,
@@ -133,83 +122,13 @@ export default function App() {
       <div className="print:hidden">
         <Header
           records={records}
-          onImportRecords={(imported) => {
-            setRecords((prev) => [...imported, ...prev]);
-          }}
           onOpenSettings={() => setIsSettingsModalOpen(true)}
           onOpenPrintModal={triggerPrintAll}
-          onResetDemo={handleResetDemo}
         />
       </div>
 
       {/* Main Content Workspace - Hidden during print */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6 print:hidden">
-        {/* Banner Explaining Understanding from Video */}
-        <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-5 rounded-2xl shadow-lg border border-slate-800 relative overflow-hidden">
-          <div className="absolute right-0 top-0 translate-x-12 -translate-y-12 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
-            <div className="space-y-2 max-w-3xl">
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-500 text-white tracking-wide uppercase">
-                  Excel Video Formula Engine
-                </span>
-                <span className="text-slate-400 text-xs font-mono">
-                  =CONCATENATE(P5,"X",Q5,"X",R5,"X",S5)
-                </span>
-              </div>
-              <h2 className="text-base font-bold text-white">
-                PVH Sticker Generator for Zebra ZT410 (4" x 12")
-              </h2>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Dimensions in <strong>INCHES</strong> convert to <strong>CM</strong> (× 2.54), generating concatenated string <code className="bg-slate-800 text-amber-300 px-1 py-0.5 rounded font-mono">59.69X38.1X29.21XCM</code>. Net Weight is calculated automatically.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3 shrink-0">
-              <button
-                onClick={() => setIsAddModalOpen(true)}
-                className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-2"
-              >
-                <Sparkles className="w-4 h-4" />
-                Add New Sticker
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Live Sticker Preview Side-by-Side Card */}
-        <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
-          <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 bg-blue-50 text-blue-600 rounded-lg">
-                <Layers className="w-4 h-4" />
-              </div>
-              <h3 className="text-sm font-bold text-slate-800">
-                Print Area Preview (2 Stickers per 12" x 4" Sheet)
-              </h3>
-            </div>
-            <span className="text-xs text-slate-500 font-mono">
-              Matching Zebra ZT410 stock ({records.length} records in DB)
-            </span>
-          </div>
-
-          {/* 2-Up Sample Rendering */}
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 overflow-x-auto">
-            {records.length > 0 ? (
-              <TwoUpStickerPair
-                leftRecord={records[0]}
-                rightRecord={records[1] || records[0]}
-                settings={printerSettings}
-              />
-            ) : (
-              <div className="p-8 text-center text-slate-400 text-xs">
-                No stickers available to preview.
-              </div>
-            )}
-          </div>
-        </div>
-
         {/* Database Table Section */}
         <DatabaseTable
           records={records}

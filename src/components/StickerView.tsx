@@ -17,7 +17,7 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
 }) => {
   const fontStyle = {
     fontFamily: settings?.fontFamily || 'Arial, sans-serif',
-    fontSize: isCompact ? '13px' : `${settings?.fontSizePt || 17}pt`,
+    fontSize: isCompact ? '12px' : `${settings?.fontSizePt || 17}pt`,
     lineHeight: '2.05',
   };
 
@@ -98,16 +98,16 @@ export const TwoUpStickerPair: React.FC<TwoUpPairProps> = ({
   settings,
 }) => {
   return (
-    <div className="sticker-page-pair flex items-center justify-between w-full bg-white p-2 border border-gray-200 print:border-none print:p-0 print:m-0 print:shadow-none">
-      <div className="w-[5.7in] print:w-[5.7in] shrink-0">
+    <div className="sticker-page-pair flex items-center justify-between gap-10 print:gap-12 w-full bg-white p-3 border border-gray-200 print:border-none print:p-0 print:m-0 print:shadow-none">
+      <div className="w-[5.3in] print:w-[5.3in] shrink-0">
         <SingleSticker record={leftRecord} settings={settings} />
       </div>
       {rightRecord ? (
-        <div className="w-[5.7in] print:w-[5.7in] shrink-0">
+        <div className="w-[5.3in] print:w-[5.3in] shrink-0">
           <SingleSticker record={rightRecord} settings={settings} />
         </div>
       ) : (
-        <div className="w-[5.7in] print:w-[5.7in] shrink-0 opacity-0 pointer-events-none">
+        <div className="w-[5.3in] print:w-[5.3in] shrink-0 opacity-0 pointer-events-none">
           <SingleSticker record={leftRecord} settings={settings} />
         </div>
       )}

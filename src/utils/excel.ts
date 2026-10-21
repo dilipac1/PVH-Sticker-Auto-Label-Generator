@@ -38,7 +38,7 @@ export function formatWeight(weight: number): string {
   return `${weight.toFixed(2)} KG`;
 }
 
-export function calculateNetWeight(grossWeight: number, tareWeight: number = 0.50): number {
+export function calculateNetWeight(grossWeight: number, tareWeight: number = 0.45): number {
   if (isNaN(grossWeight)) return 0;
   const net = grossWeight - tareWeight;
   return Math.max(0, Math.round(net * 100) / 100);
@@ -51,8 +51,8 @@ export const INITIAL_DEMO_RECORDS: StickerRecord[] = [
     cartonNo: 1,
     totalCartons: 2,
     grossWeight: 3.20,
-    netWeight: 2.70,
-    tareWeight: 0.50,
+    netWeight: 2.75,
+    tareWeight: 0.45,
     lengthInch: 23.5,
     widthInch: 15.0,
     heightInch: 11.5,
@@ -71,8 +71,8 @@ export const INITIAL_DEMO_RECORDS: StickerRecord[] = [
     cartonNo: 2,
     totalCartons: 2,
     grossWeight: 2.10,
-    netWeight: 1.60,
-    tareWeight: 0.50,
+    netWeight: 1.65,
+    tareWeight: 0.45,
     lengthInch: 17.0,
     widthInch: 15.0,
     heightInch: 6.0,
@@ -91,11 +91,11 @@ export const INITIAL_DEMO_RECORDS: StickerRecord[] = [
 export const DEFAULT_PRINTER_SETTINGS: PrinterSettings = {
   layoutMode: '2-up',
   paperSize: 'zebra-12x4', // Exact Zebra ZT410 (4.00 in x 12.00 in Landscape)
-  defaultTareWeight: 0.50,
+  defaultTareWeight: 0.45, // Default Tare Weight 0.45 KG
   fontSizePt: 17, // User requested 17pt default
   fontFamily: 'Arial',
   uppercaseOnly: true,
-  labelWidthPx: 275, // Generous 275px label width preventing COUNTRY OF ORIGIN overlap at 17pt
+  labelWidthPx: 275, // Generous 275px label width
   columnWidthMm: 80,
   rowGapMm: 4,
   stickerWidthMm: 95,
@@ -143,7 +143,7 @@ export function parseExcelFile(file: File): Promise<Partial<StickerRecord>[]> {
         const parsed: Partial<StickerRecord>[] = jsonData.map((row, index) => {
           const poNumber = String(row['PO NUMBER'] || row['PO'] || row['po_number'] || '4100059739').trim();
           const grossWeight = parseFloat(row['GROSS WEIGHT (KG)'] || row['GROSS WEIGHT'] || row['gross_weight'] || '0') || 0;
-          const tareWeight = parseFloat(row['TARE WEIGHT (KG)'] || row['TARE WEIGHT'] || row['tare_weight'] || '0.5') || 0.5;
+          const tareWeight = parseFloat(row['TARE WEIGHT (KG)'] || row['TARE WEIGHT'] || row['tare_weight'] || '0.45') || 0.45;
 
           const lIn = parseFloat(row['LENGTH (INCH)'] || row['LENGTH'] || row['l_inch'] || '23.5') || 23.5;
           const wIn = parseFloat(row['WIDTH (INCH)'] || row['WIDTH'] || row['w_inch'] || '15') || 15;
