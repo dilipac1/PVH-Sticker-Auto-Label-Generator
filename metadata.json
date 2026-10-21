@@ -1,0 +1,6 @@
+{
+  "name": "PVH Carton Sticker & Auto Label Generator",
+  "description": "Automated carton sticker label generator and printer with Inch-to-CM conversion, database batch management, and exact Excel layout matching.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
