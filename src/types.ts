@@ -23,9 +23,10 @@ export interface StickerRecord {
 
 export interface PrinterSettings {
   layoutMode: '2-up' | '1-up'; // '2-up' for dual side-by-side like Excel print area, '1-up' for single thermal roll
+  paperSize: 'zebra-12x4' | 'a4-landscape' | 'custom';
   defaultTareWeight: number; // Default 0.50 KG
   fontSizePt: number; // Font size in pt or px
-  fontFamily: 'Arial' | 'Courier New' | 'Times New Roman' | 'Trebuchet MS';
+  fontFamily: 'Arial' | 'Times New Roman' | 'Courier New' | 'Trebuchet MS';
   uppercaseOnly: boolean;
   labelWidthPx: number; // Width of label column (e.g. 195px)
   columnWidthMm: number;

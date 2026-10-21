@@ -90,11 +90,12 @@ export const INITIAL_DEMO_RECORDS: StickerRecord[] = [
 
 export const DEFAULT_PRINTER_SETTINGS: PrinterSettings = {
   layoutMode: '2-up',
+  paperSize: 'zebra-12x4', // Exact Zebra ZT410 (4.00 in x 12.00 in Landscape)
   defaultTareWeight: 0.50,
-  fontSizePt: 10.5,
-  fontFamily: 'Times New Roman',
+  fontSizePt: 12,
+  fontFamily: 'Arial',
   uppercaseOnly: true,
-  labelWidthPx: 195,
+  labelWidthPx: 210,
   columnWidthMm: 80,
   rowGapMm: 4,
   stickerWidthMm: 95,

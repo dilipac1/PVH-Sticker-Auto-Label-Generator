@@ -17,16 +17,16 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
 }) => {
   const fontStyle = {
     fontFamily: settings?.fontFamily || 'Times New Roman, serif',
-    fontSize: isCompact ? '12px' : `${settings?.fontSizePt || 11}pt`,
-    lineHeight: '1.7',
+    fontSize: isCompact ? '11px' : `${settings?.fontSizePt || 11}pt`,
+    lineHeight: '1.75',
   };
 
-  const labelWidth = settings?.labelWidthPx || 195;
+  const labelWidth = settings?.labelWidthPx || 200;
 
   return (
     <div
       style={fontStyle}
-      className={`font-bold tracking-tight text-black text-left select-none bg-white p-3 border border-dashed border-gray-200 print:border-none print:p-0 ${className}`}
+      className={`font-bold tracking-tight text-black text-left select-none bg-white p-2 border border-dashed border-gray-300 print:border-none print:p-0 print:m-0 print:shadow-none ${className}`}
     >
       <table className="w-full border-collapse text-left border-none table-fixed">
         <tbody>
@@ -38,8 +38,8 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
             >
               GROSS WEIGHT
             </td>
-            <td className="w-4 text-center font-bold px-1">:</td>
-            <td className="font-bold text-black pl-2 whitespace-nowrap">
+            <td className="w-5 text-center font-bold px-1">:</td>
+            <td className="font-bold text-black pl-3 whitespace-nowrap">
               {formatWeight(record.grossWeight)}
             </td>
           </tr>
@@ -52,8 +52,8 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
             >
               NET WEIGHT
             </td>
-            <td className="w-4 text-center font-bold px-1">:</td>
-            <td className="font-bold text-black pl-2 whitespace-nowrap">
+            <td className="w-5 text-center font-bold px-1">:</td>
+            <td className="font-bold text-black pl-3 whitespace-nowrap">
               {formatWeight(record.netWeight)}
             </td>
           </tr>
@@ -66,8 +66,8 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
             >
               MEASUREMENT
             </td>
-            <td className="w-4 text-center font-bold px-1">:</td>
-            <td className="font-bold text-black pl-2 whitespace-nowrap">
+            <td className="w-5 text-center font-bold px-1">:</td>
+            <td className="font-bold text-black pl-3 whitespace-nowrap">
               {record.measurementStr || '59.69X38.1X29.21XCM'}
             </td>
           </tr>
@@ -80,8 +80,8 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
             >
               SEASON/YEAR
             </td>
-            <td className="w-4 text-center font-bold px-1">:</td>
-            <td className="font-bold text-black pl-2 whitespace-nowrap">
+            <td className="w-5 text-center font-bold px-1">:</td>
+            <td className="font-bold text-black pl-3 whitespace-nowrap">
               {record.seasonYear || 'SP27'}
             </td>
           </tr>
@@ -94,8 +94,8 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
             >
               COUNTRY OF ORIGIN
             </td>
-            <td className="w-4 text-center font-bold px-1">:</td>
-            <td className="font-bold text-black pl-2 whitespace-nowrap">
+            <td className="w-5 text-center font-bold px-1">:</td>
+            <td className="font-bold text-black pl-3 whitespace-nowrap">
               {record.countryOfOrigin || 'SRI LANKA'}
             </td>
           </tr>
@@ -108,8 +108,8 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
             >
               PO NUMBER
             </td>
-            <td className="w-4 text-center font-bold px-1">:</td>
-            <td className="font-bold text-black pl-2 whitespace-nowrap">
+            <td className="w-5 text-center font-bold px-1">:</td>
+            <td className="font-bold text-black pl-3 whitespace-nowrap">
               {record.poNumber || '4100059739'}
             </td>
           </tr>
@@ -131,12 +131,12 @@ export const TwoUpStickerPair: React.FC<TwoUpPairProps> = ({
   settings,
 }) => {
   return (
-    <div className="grid grid-cols-2 gap-8 items-start w-full bg-white p-4 my-2 border border-gray-300 print:border-none print:p-0 print:my-0 page-break-inside-avoid overflow-x-auto">
+    <div className="grid grid-cols-2 gap-12 print:gap-16 items-start w-full bg-white p-3 my-2 border border-gray-200 print:border-none print:p-0 print:my-4 print:shadow-none page-break-inside-avoid">
       <SingleSticker record={leftRecord} settings={settings} />
       {rightRecord ? (
         <SingleSticker record={rightRecord} settings={settings} />
       ) : (
-        <div className="opacity-0 pointer-events-none">
+        <div className="opacity-0 pointer-events-none print:hidden">
           <SingleSticker record={leftRecord} settings={settings} />
         </div>
       )}

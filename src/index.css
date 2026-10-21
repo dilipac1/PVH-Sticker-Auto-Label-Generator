@@ -1,1 +1,95 @@
 @import "tailwindcss";
+
+@media print {
+  /* Exact Zebra ZT410 Stock Page Size: 12.00 in x 4.00 in Landscape */
+  @page {
+    size: 12in 4in landscape;
+    margin: 0in;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 12in !important;
+    height: 4in !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide all modal backdrops, headers, action buttons, dark overlays */
+  header,
+  footer,
+  nav,
+  button,
+  .print\:hidden {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Reset all modal containers, backgrounds, card shadows, rounded corners */
+  .fixed,
+  .backdrop-blur-xs,
+  .bg-black\/60,
+  .bg-black\/75,
+  .bg-slate-900,
+  .bg-slate-800,
+  .bg-slate-200,
+  .bg-slate-100 {
+    position: static !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: 12in !important;
+    max-width: 12in !important;
+    height: 4in !important;
+    max-height: 4in !important;
+    overflow: visible !important;
+  }
+
+  /* Target the exact sticker printable area */
+  #printable-sheet {
+    display: block !important;
+    visibility: visible !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 12in !important;
+    height: 4in !important;
+    margin: 0 !important;
+    padding: 0.25in 0.4in !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .shadow-2xl,
+  .shadow-xl,
+  .shadow-lg,
+  .shadow-md,
+  .shadow-sm,
+  .rounded-2xl,
+  .rounded-xl,
+  .rounded-lg,
+  .rounded-md {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  .page-break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .page-break-after-always {
+    break-after: page !important;
+    page-break-after: always !important;
+  }
+}

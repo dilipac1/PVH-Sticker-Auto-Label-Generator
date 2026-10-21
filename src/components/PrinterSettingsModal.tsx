@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrinterSettings } from '../types';
-import { X, Sliders, Check } from 'lucide-react';
+import { X, Sliders, Check, Printer } from 'lucide-react';
 
 interface PrinterSettingsModalProps {
   isOpen: boolean;
@@ -34,8 +34,8 @@ export const PrinterSettingsModal: React.FC<PrinterSettingsModalProps> = ({
               <Sliders className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-slate-800">Printer & Layout Config</h2>
-              <p className="text-xs text-slate-500">Fine-tune sticker text and Zebra alignment</p>
+              <h2 className="text-base font-bold text-slate-800">Zebra & Printer Setup</h2>
+              <p className="text-xs text-slate-500">Fine-tune 4" x 12" sticker size and fonts</p>
             </div>
           </div>
           <button
@@ -48,6 +48,27 @@ export const PrinterSettingsModal: React.FC<PrinterSettingsModalProps> = ({
 
         {/* Form Body */}
         <div className="p-6 space-y-4 text-xs">
+          {/* Target Printer / Stock Size */}
+          <div>
+            <label className="block font-semibold text-slate-700 mb-1 flex items-center gap-1.5">
+              <Printer className="w-3.5 h-3.5 text-blue-600" />
+              STICKER STOCK / PAPER SIZE
+            </label>
+            <select
+              value={settings.paperSize || 'zebra-12x4'}
+              onChange={(e) => handleChange('paperSize', e.target.value)}
+              className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm bg-white font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            >
+              <option value="zebra-12x4">
+                Zebra ZT410 USER Stock (4.00 in x 12.00 in Landscape)
+              </option>
+              <option value="a4-landscape">Standard A4 Sheet (Landscape)</option>
+            </select>
+            <span className="text-[10px] text-slate-500 mt-1 block">
+              Set to <strong>4.00 in x 12.00 in Landscape</strong> to match your Zebra ZT410 driver settings.
+            </span>
+          </div>
+
           {/* Default Tare Weight */}
           <div>
             <label className="block font-semibold text-slate-700 mb-1">
@@ -74,12 +95,12 @@ export const PrinterSettingsModal: React.FC<PrinterSettingsModalProps> = ({
               type="number"
               min="140"
               max="300"
-              value={settings.labelWidthPx || 195}
-              onChange={(e) => handleChange('labelWidthPx', parseInt(e.target.value) || 195)}
+              value={settings.labelWidthPx || 210}
+              onChange={(e) => handleChange('labelWidthPx', parseInt(e.target.value) || 210)}
               className="w-full px-3 py-2 border border-slate-200 rounded-lg font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
             />
             <span className="text-[10px] text-slate-500 mt-1 block">
-              Controls gap between label text (e.g. COUNTRY OF ORIGIN) and colon (:). Default 195px prevents overlap.
+              Controls distance between label text and colon (:). Default 210px matching Zebra layout.
             </span>
           </div>
 
@@ -93,9 +114,9 @@ export const PrinterSettingsModal: React.FC<PrinterSettingsModalProps> = ({
               onChange={(e) => handleChange('fontFamily', e.target.value)}
               className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm bg-white font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none"
             >
-              <option value="Times New Roman">Times New Roman (Excel Default)</option>
-              <option value="Arial">Arial (Sans-Serif Clean)</option>
-              <option value="Courier New">Courier New (Monospaced Crisp)</option>
+              <option value="Arial">Arial (Sans-Serif - Matches Zebra Print)</option>
+              <option value="Times New Roman">Times New Roman</option>
+              <option value="Courier New">Courier New</option>
             </select>
           </div>
 
@@ -110,7 +131,7 @@ export const PrinterSettingsModal: React.FC<PrinterSettingsModalProps> = ({
               min="8"
               max="20"
               value={settings.fontSizePt}
-              onChange={(e) => handleChange('fontSizePt', parseFloat(e.target.value) || 11)}
+              onChange={(e) => handleChange('fontSizePt', parseFloat(e.target.value) || 12)}
               className="w-full px-3 py-2 border border-slate-200 rounded-lg font-mono text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
