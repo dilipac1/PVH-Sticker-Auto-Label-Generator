@@ -3,26 +3,14 @@ import { StickerRecord, PrinterSettings, PresetDefaults } from './types';
 import {
   INITIAL_DEMO_RECORDS,
   DEFAULT_PRINTER_SETTINGS,
-  convertInchToCmStr,
-  calculateNetWeight,
 } from './utils/excel';
 import { Header } from './components/Header';
 import { DatabaseTable } from './components/DatabaseTable';
 import { QuickAddModal } from './components/QuickAddModal';
 import { PrintSheetModal } from './components/PrintSheetModal';
 import { PrinterSettingsModal } from './components/PrinterSettingsModal';
-import { SingleSticker, TwoUpStickerPair } from './components/StickerView';
-import {
-  CheckCircle2,
-  Sparkles,
-  Calculator,
-  Printer,
-  FileSpreadsheet,
-  Info,
-  Sliders,
-  ChevronRight,
-  Layers,
-} from 'lucide-react';
+import { TwoUpStickerPair } from './components/StickerView';
+import { Sparkles, Layers } from 'lucide-react';
 
 export default function App() {
   // LocalStorage state management
@@ -49,7 +37,7 @@ export default function App() {
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 
-  // Print queue subset (if printing selected records vs all)
+  // Print queue subset
   const [printQueue, setPrintQueue] = useState<StickerRecord[]>(records);
 
   // Sync to LocalStorage
@@ -131,19 +119,21 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col font-sans text-slate-800 antialiased">
-      {/* App Header */}
-      <Header
-        records={records}
-        onImportRecords={(imported) => {
-          setRecords((prev) => [...imported, ...prev]);
-        }}
-        onOpenSettings={() => setIsSettingsModalOpen(true)}
-        onOpenPrintModal={triggerPrintAll}
-        onResetDemo={handleResetDemo}
-      />
+      {/* App Header - Hidden during print */}
+      <div className="print:hidden">
+        <Header
+          records={records}
+          onImportRecords={(imported) => {
+            setRecords((prev) => [...imported, ...prev]);
+          }}
+          onOpenSettings={() => setIsSettingsModalOpen(true)}
+          onOpenPrintModal={triggerPrintAll}
+          onResetDemo={handleResetDemo}
+        />
+      </div>
 
-      {/* Main Content Workspace */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+      {/* Main Content Workspace - Hidden during print */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6 print:hidden">
         {/* Banner Explaining Understanding from Video */}
         <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-5 rounded-2xl shadow-lg border border-slate-800 relative overflow-hidden">
           <div className="absolute right-0 top-0 translate-x-12 -translate-y-12 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -152,17 +142,17 @@ export default function App() {
             <div className="space-y-2 max-w-3xl">
               <div className="flex items-center gap-2">
                 <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-500 text-white tracking-wide uppercase">
-                  Excel Video Formula Analyzed
+                  Excel Video Formula Engine
                 </span>
                 <span className="text-slate-400 text-xs font-mono">
                   =CONCATENATE(P5,"X",Q5,"X",R5,"X",S5)
                 </span>
               </div>
               <h2 className="text-base font-bold text-white">
-                Automated PVH Sticker Generator & Batch Print Engine
+                PVH Sticker Generator for Zebra ZT410 (4" x 12")
               </h2>
               <p className="text-xs text-slate-300 leading-relaxed">
-                As seen in your Excel video, dimensions entered in <strong>INCHES</strong> are multiplied by <strong>2.54</strong> to convert to <strong>CM</strong>, concatenated into <code className="bg-slate-800 text-amber-300 px-1 py-0.5 rounded font-mono">59.69X38.1X29.21XCM</code> format, and combined with Gross & Net weight (<code className="bg-slate-800 text-emerald-300 px-1 py-0.5 rounded font-mono">Net = Gross - 0.50 KG</code>).
+                Dimensions in <strong>INCHES</strong> convert to <strong>CM</strong> (× 2.54), generating concatenated string <code className="bg-slate-800 text-amber-300 px-1 py-0.5 rounded font-mono">59.69X38.1X29.21XCM</code>. Net Weight is calculated automatically.
               </p>
             </div>
 
@@ -186,11 +176,11 @@ export default function App() {
                 <Layers className="w-4 h-4" />
               </div>
               <h3 className="text-sm font-bold text-slate-800">
-                Exact Print Area Preview (Dual 2-Up Side-by-Side Format)
+                Print Area Preview (2 Stickers per 12" x 4" Sheet)
               </h3>
             </div>
             <span className="text-xs text-slate-500 font-mono">
-              Matching your Excel print page preview ({records.length} records in DB)
+              Matching Zebra ZT410 stock ({records.length} records in DB)
             </span>
           </div>
 

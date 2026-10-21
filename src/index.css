@@ -7,14 +7,6 @@
     margin: 0in;
   }
 
-  /* CRITICAL: HIDE THE ENTIRE REACT ROOT DASHBOARD */
-  #root {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    overflow: hidden !important;
-  }
-
   html, body {
     background: #ffffff !important;
     color: #000000 !important;
@@ -27,18 +19,52 @@
     print-color-adjust: exact !important;
   }
 
-  /* SHOW ONLY THE DEDICATED PRINT CONTAINER */
-  #printable-sheet,
-  .printable-only-area {
+  /* HIDE ALL NON-PRINTABLE ELEMENTS */
+  .print\:hidden,
+  header,
+  footer,
+  nav,
+  button,
+  main {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* RESET MODAL WRAPPER FOR PRINTING */
+  .fixed.inset-0 {
+    position: static !important;
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: 12in !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .bg-black\/75,
+  .bg-black\/60,
+  .bg-slate-900,
+  .bg-slate-800,
+  .bg-slate-200,
+  .bg-slate-100 {
+    background: transparent !important;
+  }
+
+  /* TARGET PRINTABLE AREA */
+  #printable-sheet {
     display: block !important;
     visibility: visible !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
     width: 12in !important;
     margin: 0 !important;
     padding: 0 !important;
     background: #ffffff !important;
+    box-shadow: none !important;
+    border: none !important;
   }
 
   /* EVERY 2-UP PAIR OCCUPIES EXACTLY ONE 12" x 4" PAGE AND FORCES A PAGE BREAK */
@@ -49,7 +75,7 @@
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    padding: 0.2in 0.4in !important;
+    padding: 0.15in 0.35in !important;
     box-sizing: border-box !important;
     page-break-after: always !important;
     break-after: page !important;
@@ -66,7 +92,7 @@
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 0.2in 0.4in !important;
+    padding: 0.15in 0.35in !important;
     box-sizing: border-box !important;
     page-break-after: always !important;
     break-after: page !important;
