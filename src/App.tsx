@@ -11,13 +11,14 @@ import { PrintSheetModal } from './components/PrintSheetModal';
 import { PrinterSettingsModal } from './components/PrinterSettingsModal';
 
 export default function App() {
-  // LocalStorage state management - Private to each user's browser session
+  // LocalStorage state management with auto-sorting by Carton Number ascending (#1, #2, #3...)
   const [records, setRecords] = useState<StickerRecord[]>(() => {
     try {
       const saved = localStorage.getItem('pvh_sticker_records');
-      return saved ? JSON.parse(saved) : INITIAL_DEMO_RECORDS;
+      const loaded: StickerRecord[] = saved ? JSON.parse(saved) : INITIAL_DEMO_RECORDS;
+      return loaded.sort((a, b) => (a.cartonNo || 0) - (b.cartonNo || 0));
     } catch {
-      return INITIAL_DEMO_RECORDS;
+      return INITIAL_DEMO_RECORDS.sort((a, b) => (a.cartonNo || 0) - (b.cartonNo || 0));
     }
   });
 
@@ -43,7 +44,7 @@ export default function App() {
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 
-  // Print queue subset
+  // Print queue subset - always sorted by carton number
   const [printQueue, setPrintQueue] = useState<StickerRecord[]>(records);
 
   // Sync to private browser LocalStorage
@@ -71,13 +72,19 @@ export default function App() {
     }
   };
 
-  // Record CRUD operations
+  // Record CRUD operations with auto-sort by Carton Number ascending
   const handleAddRecords = (newRecords: StickerRecord[]) => {
-    setRecords((prev) => [...newRecords, ...prev]);
+    setRecords((prev) => {
+      const combined = [...prev, ...newRecords];
+      return combined.sort((a, b) => (a.cartonNo || 0) - (b.cartonNo || 0));
+    });
   };
 
   const handleUpdateRecord = (updated: StickerRecord) => {
-    setRecords((prev) => prev.map((r) => (r.id === updated.id ? updated : r)));
+    setRecords((prev) => {
+      const updatedList = prev.map((r) => (r.id === updated.id ? updated : r));
+      return updatedList.sort((a, b) => (a.cartonNo || 0) - (b.cartonNo || 0));
+    });
   };
 
   const handleDeleteRecords = (idsToDelete: string[]) => {
@@ -92,17 +99,26 @@ export default function App() {
       cartonNo: (rec.cartonNo || 1) + 1,
       createdAt: new Date().toISOString(),
     };
-    setRecords((prev) => [dup, ...prev]);
+    setRecords((prev) => {
+      const combined = [...prev, dup];
+      return combined.sort((a, b) => (a.cartonNo || 0) - (b.cartonNo || 0));
+    });
   };
 
-  // Open print modal with custom record set
+  // Open print modal with custom record set sorted by Carton Number
   const triggerPrintForRecords = (targetRecords: StickerRecord[]) => {
-    setPrintQueue(targetRecords);
+    const sortedTarget = [...targetRecords].sort(
+      (a, b) => (a.cartonNo || 0) - (b.cartonNo || 0)
+    );
+    setPrintQueue(sortedTarget);
     setIsPrintModalOpen(true);
   };
 
   const triggerPrintAll = () => {
-    setPrintQueue(records);
+    const sortedAll = [...records].sort(
+      (a, b) => (a.cartonNo || 0) - (b.cartonNo || 0)
+    );
+    setPrintQueue(sortedAll);
     setIsPrintModalOpen(true);
   };
 
