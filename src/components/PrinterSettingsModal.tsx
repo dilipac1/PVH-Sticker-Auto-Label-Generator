@@ -94,13 +94,13 @@ export const PrinterSettingsModal: React.FC<PrinterSettingsModalProps> = ({
             <input
               type="number"
               min="140"
-              max="300"
-              value={settings.labelWidthPx || 210}
-              onChange={(e) => handleChange('labelWidthPx', parseInt(e.target.value) || 210)}
+              max="350"
+              value={settings.labelWidthPx || 275}
+              onChange={(e) => handleChange('labelWidthPx', parseInt(e.target.value) || 275)}
               className="w-full px-3 py-2 border border-slate-200 rounded-lg font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
             />
             <span className="text-[10px] text-slate-500 mt-1 block">
-              Controls distance between label text and colon (:). Default 210px matching Zebra layout.
+              Controls distance between label text and colon (:). Default 275px ensures 17pt font fits without overlap.
             </span>
           </div>
 
@@ -129,9 +129,9 @@ export const PrinterSettingsModal: React.FC<PrinterSettingsModalProps> = ({
               type="number"
               step="0.5"
               min="8"
-              max="20"
-              value={settings.fontSizePt}
-              onChange={(e) => handleChange('fontSizePt', parseFloat(e.target.value) || 12)}
+              max="24"
+              value={settings.fontSizePt || 17}
+              onChange={(e) => handleChange('fontSizePt', parseFloat(e.target.value) || 17)}
               className="w-full px-3 py-2 border border-slate-200 rounded-lg font-mono text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>

@@ -17,11 +17,11 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
 }) => {
   const fontStyle = {
     fontFamily: settings?.fontFamily || 'Arial, sans-serif',
-    fontSize: isCompact ? '13px' : `${settings?.fontSizePt || 16}pt`,
-    lineHeight: '2.1', // Fills 4 inch vertical height perfectly
+    fontSize: isCompact ? '13px' : `${settings?.fontSizePt || 17}pt`,
+    lineHeight: '2.05', // Clean vertical line height
   };
 
-  const labelWidth = settings?.labelWidthPx || 240;
+  const labelWidth = settings?.labelWidthPx || 275;
 
   return (
     <div
@@ -33,8 +33,8 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
           {/* GROSS WEIGHT */}
           <tr className="align-baseline">
             <td
-              style={{ width: `${labelWidth}px` }}
-              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-2 py-1"
+              style={{ width: `${labelWidth}px`, minWidth: `${labelWidth}px` }}
+              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-3 py-1"
             >
               GROSS WEIGHT
             </td>
@@ -47,8 +47,8 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
           {/* NET WEIGHT */}
           <tr className="align-baseline">
             <td
-              style={{ width: `${labelWidth}px` }}
-              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-2 py-1"
+              style={{ width: `${labelWidth}px`, minWidth: `${labelWidth}px` }}
+              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-3 py-1"
             >
               NET WEIGHT
             </td>
@@ -61,8 +61,8 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
           {/* MEASUREMENT */}
           <tr className="align-baseline">
             <td
-              style={{ width: `${labelWidth}px` }}
-              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-2 py-1"
+              style={{ width: `${labelWidth}px`, minWidth: `${labelWidth}px` }}
+              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-3 py-1"
             >
               MEASUREMENT
             </td>
@@ -75,8 +75,8 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
           {/* SEASON/YEAR */}
           <tr className="align-baseline">
             <td
-              style={{ width: `${labelWidth}px` }}
-              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-2 py-1"
+              style={{ width: `${labelWidth}px`, minWidth: `${labelWidth}px` }}
+              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-3 py-1"
             >
               SEASON/YEAR
             </td>
@@ -89,8 +89,8 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
           {/* COUNTRY OF ORIGIN */}
           <tr className="align-baseline">
             <td
-              style={{ width: `${labelWidth}px` }}
-              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-2 py-1"
+              style={{ width: `${labelWidth}px`, minWidth: `${labelWidth}px` }}
+              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-3 py-1"
             >
               COUNTRY OF ORIGIN
             </td>
@@ -103,8 +103,8 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
           {/* PO NUMBER */}
           <tr className="align-baseline">
             <td
-              style={{ width: `${labelWidth}px` }}
-              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-2 py-1"
+              style={{ width: `${labelWidth}px`, minWidth: `${labelWidth}px` }}
+              className="font-extrabold text-black tracking-wider whitespace-nowrap pr-3 py-1"
             >
               PO NUMBER
             </td>
