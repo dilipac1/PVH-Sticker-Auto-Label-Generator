@@ -1,7 +1,7 @@
 import React from 'react';
 import { StickerRecord, PrinterSettings } from '../types';
 import { SingleSticker, TwoUpStickerPair } from './StickerView';
-import { Printer, X, FileText, LayoutGrid, Check } from 'lucide-react';
+import { Printer, X, FileText, LayoutGrid } from 'lucide-react';
 
 interface PrintSheetModalProps {
   isOpen: boolean;
@@ -47,7 +47,7 @@ export const PrintSheetModal: React.FC<PrintSheetModalProps> = ({
             <div>
               <h2 className="text-lg font-bold">Sticker Print Preview ({records.length} Stickers)</h2>
               <p className="text-xs text-slate-300">
-                Click "Print Now" for exact raw Excel sticker sheet without margins or borders.
+                Exact 4" x 12" Zebra Stock Layout (Strictly 2 Stickers per Page).
               </p>
             </div>
           </div>
@@ -100,10 +100,10 @@ export const PrintSheetModal: React.FC<PrintSheetModalProps> = ({
         <div className="flex-1 p-8 bg-slate-200 overflow-y-auto print:bg-white print:p-0 print:overflow-visible">
           <div
             id="printable-sheet"
-            className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg border border-gray-200 print:shadow-none print:border-none print:p-0 print:max-w-none print:w-full print:bg-white"
+            className="printable-only-area max-w-5xl mx-auto bg-white p-8 rounded-lg shadow-lg border border-gray-200 print:shadow-none print:border-none print:p-0 print:max-w-none print:w-full print:bg-white"
           >
             {settings.layoutMode === '2-up' ? (
-              <div className="space-y-6 print:space-y-6">
+              <div className="space-y-6 print:space-y-0">
                 {pairs.map((pair, index) => (
                   <TwoUpStickerPair
                     key={`pair-${index}`}
@@ -118,7 +118,7 @@ export const PrintSheetModal: React.FC<PrintSheetModalProps> = ({
                 {records.map((rec) => (
                   <div
                     key={rec.id}
-                    className="p-4 bg-white border border-gray-300 rounded mb-4 print:border-none print:m-0 print:p-0 print:shadow-none page-break-after-always"
+                    className="sticker-single-page bg-white p-4 border border-gray-300 rounded print:border-none print:p-0 print:shadow-none"
                   >
                     <SingleSticker record={rec} settings={settings} />
                   </div>
@@ -131,7 +131,7 @@ export const PrintSheetModal: React.FC<PrintSheetModalProps> = ({
         {/* Modal Footer - Hidden in Print */}
         <div className="px-6 py-3 bg-slate-50 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between print:hidden">
           <span>
-            Clean raw print output enabled. Browser headers/footers and dialog shadows stripped.
+            Target Stock: <strong>Zebra ZT410 (4" x 12" Landscape)</strong>. Strictly 2 stickers per page.
           </span>
           <span className="font-mono text-slate-700">
             Font: {settings.fontFamily} ({settings.fontSizePt}pt)

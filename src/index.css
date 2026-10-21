@@ -7,6 +7,14 @@
     margin: 0in;
   }
 
+  /* CRITICAL: HIDE THE ENTIRE REACT ROOT DASHBOARD */
+  #root {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+
   html, body {
     background: #ffffff !important;
     color: #000000 !important;
@@ -19,77 +27,52 @@
     print-color-adjust: exact !important;
   }
 
-  /* Hide all modal backdrops, headers, action buttons, dark overlays */
-  header,
-  footer,
-  nav,
-  button,
-  .print\:hidden {
-    display: none !important;
-    visibility: hidden !important;
-  }
-
-  /* Reset all modal containers, backgrounds, card shadows, rounded corners */
-  .fixed,
-  .backdrop-blur-xs,
-  .bg-black\/60,
-  .bg-black\/75,
-  .bg-slate-900,
-  .bg-slate-800,
-  .bg-slate-200,
-  .bg-slate-100 {
-    position: static !important;
-    background: transparent !important;
-    backdrop-filter: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: none !important;
-    box-shadow: none !important;
-    width: 12in !important;
-    max-width: 12in !important;
-    height: 4in !important;
-    max-height: 4in !important;
-    overflow: visible !important;
-  }
-
-  /* Target the exact sticker printable area */
-  #printable-sheet {
+  /* SHOW ONLY THE DEDICATED PRINT CONTAINER */
+  #printable-sheet,
+  .printable-only-area {
     display: block !important;
     visibility: visible !important;
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
     width: 12in !important;
-    height: 4in !important;
     margin: 0 !important;
-    padding: 0.25in 0.4in !important;
+    padding: 0 !important;
     background: #ffffff !important;
-    box-shadow: none !important;
-    border: none !important;
-    border-radius: 0 !important;
+  }
+
+  /* EVERY 2-UP PAIR OCCUPIES EXACTLY ONE 12" x 4" PAGE AND FORCES A PAGE BREAK */
+  .sticker-page-pair {
+    width: 12in !important;
+    height: 4in !important;
+    max-height: 4in !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0.2in 0.4in !important;
     box-sizing: border-box !important;
-  }
-
-  .shadow-2xl,
-  .shadow-xl,
-  .shadow-lg,
-  .shadow-md,
-  .shadow-sm,
-  .rounded-2xl,
-  .rounded-xl,
-  .rounded-lg,
-  .rounded-md {
-    box-shadow: none !important;
-    border-radius: 0 !important;
-  }
-
-  .page-break-inside-avoid {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-
-  .page-break-after-always {
-    break-after: page !important;
     page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+  }
+
+  .sticker-single-page {
+    width: 12in !important;
+    height: 4in !important;
+    max-height: 4in !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.2in 0.4in !important;
+    box-sizing: border-box !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
   }
 }
