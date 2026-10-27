@@ -2,9 +2,8 @@ import * as XLSX from 'xlsx';
 import { StickerRecord, PrinterSettings } from '../types';
 
 /**
- * Converts inches to CM and formats as Excel concatenate string:
- * =CONCATENATE(P5,"X",Q5,"X",R5,"X",S5)
- * Example: 23.5 in, 15 in, 11.5 in => 59.69X38.1X29.21XCM
+ * Converts inches to CM and formats measurement string:
+ * Example: 23.5 in, 15 in, 11.5 in => 59.69X38.1X29.21 CM
  */
 export function convertInchToCmStr(lInch: number, wInch: number, hInch: number): {
   lengthCm: number;
@@ -23,7 +22,8 @@ export function convertInchToCmStr(lInch: number, wInch: number, hInch: number):
     return str.endsWith('0') ? str.slice(0, -1) : str;
   };
 
-  const str = `${formatCm(lCm)}X${formatCm(wCm)}X${formatCm(hCm)}XCM`;
+  // Removed last X before CM and replaced with a space as requested
+  const str = `${formatCm(lCm)}X${formatCm(wCm)}X${formatCm(hCm)} CM`;
 
   return {
     lengthCm: lCm,
@@ -59,7 +59,7 @@ export const INITIAL_DEMO_RECORDS: StickerRecord[] = [
     lengthCm: 59.69,
     widthCm: 38.1,
     heightCm: 29.21,
-    measurementStr: '59.69X38.1X29.21XCM',
+    measurementStr: '59.69X38.1X29.21 CM',
     seasonYear: 'SP27',
     countryOfOrigin: 'SRI LANKA',
     poNumber: '4100059739',
@@ -79,7 +79,7 @@ export const INITIAL_DEMO_RECORDS: StickerRecord[] = [
     lengthCm: 43.18,
     widthCm: 38.1,
     heightCm: 15.24,
-    measurementStr: '43.18X38.1X15.24XCM',
+    measurementStr: '43.18X38.1X15.24 CM',
     seasonYear: 'SP27',
     countryOfOrigin: 'SRI LANKA',
     poNumber: '4100059739',

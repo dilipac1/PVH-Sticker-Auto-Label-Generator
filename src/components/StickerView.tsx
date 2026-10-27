@@ -52,7 +52,7 @@ export const SingleSticker: React.FC<StickerViewProps> = ({
         </div>
         <div className="text-center font-extrabold text-black">:</div>
         <div className="whitespace-nowrap pl-3 font-extrabold text-black">
-          {record.measurementStr || '59.69X38.1X29.21XCM'}
+          {record.measurementStr || '59.69X38.1X29.21 CM'}
         </div>
 
         {/* SEASON/YEAR */}
